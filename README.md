@@ -28,3 +28,10 @@ I am currently planning and drawing out the branching structure of this program 
 ##Phase 2
 
 Setting up the sqlite database and migrations. Command line interface of the app is being built and features are being implemented.
+
+
+
+#Copyright
+
+zero....
+I need a lawyer
