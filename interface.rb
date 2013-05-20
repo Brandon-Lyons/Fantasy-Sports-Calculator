@@ -3,7 +3,8 @@ module Interface
 	include Calculate
 
 	CLEAR = "\e[H\e[2J"
-	def intro
+	def home_screen(user_id)
+		@user_id = user_id
 		title = <<EOS
 
 
@@ -26,6 +27,7 @@ module Interface
 EOS
 		puts CLEAR
 		puts title
+		puts "Hello #{@user_id}!"
 		puts "Please select an option"
 		puts "Create new league ---> [n]"
 		puts "View leagues---------> [v]"
@@ -48,7 +50,7 @@ EOS
 		puts CLEAR
 		puts "Please enter the name of the new league"
 		league_name = gets.chomp
-		league = League.create(name: league_name)
+		league = League.create(user_id: @user_id, name: league_name)
 		if league.save
 			rules
 		else
@@ -60,7 +62,7 @@ EOS
 
 	def view_leagues
 		puts CLEAR
-		leagues = League.all
+		leagues = League.where(:user_id => @user_id).all
 		unless leagues.empty?
 			leagues.each_with_index {|item, i| puts "#{i + 1}. #{item.name}"}
 		else
@@ -71,16 +73,16 @@ EOS
 		if input == "v"
 			puts "enter name of league you would like to view"
 			input2 = gets.chomp.downcase
-			rules(League.where(name: input2).first)
+			rules(League.where(user_id: @user_id, name: input2).first)
 		end
 		delete_league if input == "d"	
-		intro if input == "b"	
+		home_screen(@user_id) if input == "b"	
 	end
 
 	def delete_league
 		puts "enter name of league to delete"
 			input2 = gets.chomp.downcase
-			leagues = (League.where(name: input2).all)
+			leagues = (League.where(user_id: @user_id, name: input2).all)
 		leagues.each do |item|
 			item.destroy
 		end
@@ -115,7 +117,7 @@ EOS
 		if input == "y"
 			rule_change(new_league)
 		else
-			intro
+			home_screen(@user_id)
 		end
 	end
 
@@ -197,7 +199,7 @@ EOS
 		input = gets.chomp.downcase
 		rule_change(league) if input == "b"
 		view_leagues if input == "v"
-		intro if input == "h"
+		home_screen(@user_id) if input == "h"
 	end
 
 end

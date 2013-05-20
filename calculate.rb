@@ -4,6 +4,7 @@ module Calculate
 	#statistical category
 
 	#call stat api here or csv
-
+	def calculate_score
+	end
 
 end

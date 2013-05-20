@@ -1,6 +1,8 @@
 require_relative 'bootstrap-ar'
 require_relative 'interface'
+require_relative 'login'
 include Interface
+include Login
 # command = ARGV[0]
 
 # if command == "add"
