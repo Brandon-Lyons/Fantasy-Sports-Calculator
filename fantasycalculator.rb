@@ -1,8 +1,11 @@
 require_relative 'bootstrap-ar'
 require_relative 'interface'
 require_relative 'login'
+require_relative 'calculate'
+require 'csv'
 include Interface
 include Login
+include Calculate
 # command = ARGV[0]
 
 # if command == "add"

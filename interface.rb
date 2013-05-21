@@ -40,7 +40,7 @@ EOS
 		elsif input == "v"
 			view_leagues
 		elsif input == "c"
-
+			choose_position
 		else
 			puts `clear`		
 		end
@@ -77,6 +77,7 @@ EOS
 		end
 		delete_league if input == "d"	
 		home_screen(@user_id) if input == "b"	
+		choose_position if input == "c"
 	end
 
 	def delete_league

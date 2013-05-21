@@ -7,9 +7,11 @@ module Login
 		puts "If you do not have an account please create one"
 		puts "[L]ogin"
 		puts "[C]reate account"
+		puts "[D]elete account"
 		input = gets.chomp.upcase
 		login if input == "L"
 		create_account if input == "C"
+		delete_account if input == "D"
 	end
 
 	def login
@@ -18,7 +20,39 @@ module Login
 		user_name = gets.chomp
 		puts "please enter password"
 		password = STDIN.noecho(&:gets)
-		authentication(user_name, password.chomp)			
+		if authentication(user_name, password.chomp)
+			home_screen(User.where(user_id: user_name).first.user_id)
+		else
+			puts "User name and/or password is incorrect"
+			puts "[r]etry, [c]reate account"
+			input = gets.chomp.downcase
+			login if input == "r"
+			create_account if input == "c"
+		end	
+	end
+
+	def delete_account
+		users = User.all
+		unless users.empty?
+			users.each_with_index {|item, i| puts "#{i + 1}. #{item.user_id}"}
+			puts "Select account to delete by number"
+			input = gets.chomp.to_i
+			puts "Enter account password to confirm deletion"
+			puts "WARNING this will delete all leagues associated with this account"
+			password = gets.chomp
+			if authentication(users[input - 1].user_id, password)
+				destroy_account(users[input - 1].user_id)
+			else
+				puts "password doesn't match"
+				sleep(3)
+				intro
+			end
+		else
+			puts "There are no accounts"
+			puts "[C]reate account, E[x]it"
+			input = gets.chomp.downcase
+			create_account if input == "c"
+		end
 	end
 
 	def create_account
@@ -33,23 +67,34 @@ module Login
 			sleep (3)
 			create_account
 		else
-			home_screen(User.where(user_id: user_name).first)
+			home_screen(User.where(user_id: user_name).first.user_id)
 		end
 	end
 
 	def authentication(user_name, password)
 		# puts account
 		if User.exists?(:user_id=> user_name, :password=> password)
-			home_screen(User.where(user_id: user_name).first.user_id)
+			true
 		else
-			puts "User name and/or password is incorrect"
-			puts "[r]etry, [c]reate account"
-			input = gets.chomp.downcase
-			login if input == "r"
-			create_account if input == "c"
+			false
 		end
+	end
+
+	def destroy_account(user_name)
+		user = User.where(user_id: user_name).first
+		leagues = League.where(user_id: user_name).all
+		user.destroy
+		leagues.each do |item|
+			item.destroy
+		end
+		intro
 	end
 end
 
+def authentication(user_name)
+	user = User.where(name: user_name).first
+	if user.exists?
+		puts "Welcome"
+	else
+		puts "That user name doesn't exist"
 		
-
