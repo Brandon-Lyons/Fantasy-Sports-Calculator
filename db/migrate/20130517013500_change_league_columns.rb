@@ -7,4 +7,3 @@ class ChangeLeagueColumns < ActiveRecord::Migration
 		rename_column(:leagues, :twopoint, :pass_2pt)
 	end
 end
-

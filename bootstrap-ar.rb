@@ -1,4 +1,7 @@
-
+require_relative 'interface'
+require_relative 'login'
+require_relative 'calculate'
+require 'csv'
 require "rubygems"
 require "bundler/setup"
 require "active_record"

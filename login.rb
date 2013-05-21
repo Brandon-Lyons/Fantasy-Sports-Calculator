@@ -2,20 +2,22 @@ require 'io/console'
 module Login
 
 	def intro
-		puts "\e[H\e[2J"
+		puts CLEAR
 		puts "Please login to access your leagues."
 		puts "If you do not have an account please create one"
 		puts "[L]ogin"
 		puts "[C]reate account"
 		puts "[D]elete account"
+		puts "E[x]it"
 		input = gets.chomp.upcase
 		login if input == "L"
 		create_account if input == "C"
 		delete_account if input == "D"
+		puts `clear` if input == "X"
 	end
 
 	def login
-		puts "\e[H\e[2J"
+		puts CLEAR
 		puts "please enter user name"
 		user_name = gets.chomp
 		puts "please enter password"
@@ -56,7 +58,7 @@ module Login
 	end
 
 	def create_account
-		puts "\e[H\e[2J"
+		puts CLEAR
 		puts "please enter a user name"
 		user_name = gets.chomp
 		puts "please enter a password"
@@ -89,12 +91,4 @@ module Login
 		end
 		intro
 	end
-end
-
-def authentication(user_name)
-	user = User.where(name: user_name).first
-	if user.exists?
-		puts "Welcome"
-	else
-		puts "That user name doesn't exist"
-		
+end		

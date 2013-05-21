@@ -1,10 +1,10 @@
-require_relative 'calculate'
 module Interface
-	include Calculate
 
 	CLEAR = "\e[H\e[2J"
 	def home_screen(user_id)
 		@user_id = user_id
+		@leagues = League.where(:user_id => @user_id).all
+
 		title = <<EOS
 
 
@@ -62,7 +62,7 @@ EOS
 
 	def view_leagues
 		puts CLEAR
-		leagues = League.where(:user_id => @user_id).all
+		leagues = @leagues
 		unless leagues.empty?
 			leagues.each_with_index {|item, i| puts "#{i + 1}. #{item.name}"}
 		else
