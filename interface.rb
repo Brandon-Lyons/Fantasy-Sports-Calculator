@@ -62,7 +62,7 @@ EOS
 
 	def view_leagues
 		puts CLEAR
-		leagues = @leagues
+		leagues = @leagues 
 		unless leagues.empty?
 			leagues.each_with_index {|item, i| puts "#{i + 1}. #{item.name}"}
 		else
@@ -87,7 +87,7 @@ EOS
 		leagues.each do |item|
 			item.destroy
 		end
-		view_leagues
+		home_screen(@user_id)
 	end
 
 	def rules(league = League.last)
@@ -196,10 +196,9 @@ EOS
 	end
 
 	def navbar(league)
-		puts "[b]ack to edit, [v]iew leagues, [h]ome screen"
+		puts "[b]ack to edit, [h]ome screen"
 		input = gets.chomp.downcase
 		rule_change(league) if input == "b"
-		view_leagues if input == "v"
 		home_screen(@user_id) if input == "h"
 	end
 
