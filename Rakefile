@@ -2,7 +2,7 @@
 # -*- ruby -*-
 
 require 'rake/testtask'
-require_relative 'bootstrap-ar'
+require './controllers/bootstrap-ar'
 
 Rake::TestTask.new do |t|
  t.libs << 'test'

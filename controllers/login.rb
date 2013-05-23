@@ -41,7 +41,7 @@ module Login
 			input = gets.chomp.to_i
 			puts "Enter account password to confirm deletion"
 			puts "WARNING this will delete all leagues associated with this account"
-			password = gets.chomp
+			password = STDIN.noecho(&:gets).chomp
 			if authentication(users[input - 1].user_id, password)
 				destroy_account(users[input - 1].user_id)
 			else

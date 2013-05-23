@@ -1,6 +1,6 @@
-require_relative 'interface'
-require_relative 'login'
-require_relative 'calculate'
+require './controllers/interface'
+require './controllers/login'
+require './controllers/calculate'
 require 'csv'
 require "rubygems"
 require "bundler/setup"

@@ -3,31 +3,41 @@ module Calculate
 	def choose_position
 		puts CLEAR
 		puts "Please enter the position of the player"
-		position = gets.chomp.downcase
-		list_players(position)
+		@position = gets.chomp.downcase
+		get_list(@position)
 	end
 
-	def list_players(position)
+	def get_list(position)
 		csv = CSV.read("csv/#{position}.csv")
-		array = []
+		@player_list = []
 		i = 0
-		until i == 25
+		until i == csv.length
 			row = csv[i][0].split(" ").reverse.join(" ").delete(",")
-			array << row
+			@player_list << row
 			i += 1
 		end
+		list_players
+	end
+
+	def list_players
 		puts CLEAR
-		array.each_with_index {|item, i| puts "#{i + 1}. #{item}"}
-		puts "Enter the name of the player"
-		name = gets.titleize.chomp
-		puts "What year?"
-		year = gets.chomp.to_i
-		puts "What week"
-		week = gets.chomp.to_i
-		initial = name[0]
-		last = name[/(\w+)\s*$/, 1]
-		player = "#{initial}.#{last}"
-		get_stats(year, week, player)
+		unless @player_list.empty?
+			array = @player_list.shift(25)
+			array.each_with_index {|item, i| puts "#{i + 1}. #{item}"}
+			puts "Enter the name of the player or [>] to see next 25 players"
+			name = gets.titleize.chomp
+			list_players if name == ">"
+			puts "What year?"
+			year = gets.chomp.to_i
+			puts "What week"
+			week = gets.chomp.to_i
+			initial = name[0]
+			last = name[/(\w+)\s*$/, 1]
+			player = "#{initial}.#{last}"
+			get_stats(year, week, player)
+		else
+			get_list(@position)
+		end
 	end
 
 	def get_stats(year, week, player)
