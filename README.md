@@ -11,9 +11,9 @@ Allows user id and password protection. Each user can have multiple leagues stor
 
 ###Instructions
 
-You must have Ruby 2.0.0, Python 2.7 minimum, and bundler gem installed.
-For instructions on installing Ruby [click here](http://www.ruby-lang.org/en/downloads/).
-For instructions on installing Python [click here](http://wiki.python.org/moin/BeginnersGuide/Download).
+You must have Ruby 2.0.0, Python 2.7 minimum, and bundler gem installed.<br />
+For instructions on installing Ruby [click here](http://www.ruby-lang.org/en/downloads/).<br />
+For instructions on installing Python [click here](http://wiki.python.org/moin/BeginnersGuide/Download).<br />
 Once you install Ruby and Python you will need to install the bundler gem.
 
 >gem install bundler
