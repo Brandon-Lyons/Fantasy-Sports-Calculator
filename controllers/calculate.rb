@@ -1,10 +1,17 @@
 module Calculate
 
 	def choose_position
-		puts CLEAR
-		puts "Please enter the position of the player"
-		@position = gets.chomp.downcase
-		get_list(@position)
+		unless @user.leagues.all.empty?
+			puts CLEAR
+			puts "Please enter the position of the player"
+			@position = gets.chomp.downcase
+			get_list(@position)
+		else
+			puts "There are no leagues to calculate with!"
+			puts "Please create a league"
+			sleep(3)
+			home_screen(@user)
+		end
 	end
 
 	def get_list(position)
@@ -103,7 +110,7 @@ module Calculate
 	    puts "[c]alculate another player, [b]ack to home, E[x]it"
 	    input = gets.chomp.downcase
 	    choose_position if input == "c"
-	    home_screen(leagues.first.user_id) if input == "b"
+	    home_screen(@user) if input == "b"
 	    puts `clear` if input == "x"
 	end
 
