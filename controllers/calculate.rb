@@ -44,7 +44,7 @@ module Calculate
 		stat_line = %x(python -c 'import nflgame; week = nflgame.games(#{year}, #{week}); players = nflgame.combine(week); player = players.name("#{player}"); print player.formatted_stats()')
 		stats = stat_line.split(",").flatten.join.split(":").join.split(" ")
 		stats_hash = Hash[*stats.flatten]
-		calculate_total_score(stats_hash, @leagues)
+		calculate_total_score(stats_hash, @user.leagues.all)
 	end
 
 	def calculate_pass_score(hash, league)

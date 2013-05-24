@@ -1,9 +1,8 @@
 module Interface
 
 	CLEAR = "\e[H\e[2J"
-	def home_screen(user_id)
-		@user_id = user_id
-		@leagues = League.where(:user_id => @user_id).all
+	def home_screen(user)
+		@user = user
 
 		title = <<EOS
 
@@ -27,7 +26,7 @@ module Interface
 EOS
 		puts CLEAR
 		puts title
-		puts "Hello #{@user_id}!"
+		puts "Hello #{@user.user_id}!"
 		puts "Please select an option"
 		puts "Create new league ---> [n]"
 		puts "View leagues---------> [v]"
@@ -50,8 +49,9 @@ EOS
 		puts CLEAR
 		puts "Please enter the name of the new league"
 		league_name = gets.chomp
-		league = League.create(user_id: @user_id, name: league_name)
+		league = League.create(name: league_name, user:@user.user_id)
 		if league.save
+			UserLeague.create(user_id: @user.id, league_id: League.last.id)
 			rules
 		else
 			puts "There is already a league by that name"
@@ -62,9 +62,8 @@ EOS
 
 	def view_leagues
 		puts CLEAR
-		leagues = @leagues 
-		unless leagues.empty?
-			leagues.each_with_index {|item, i| puts "#{i + 1}. #{item.name}"}
+		unless @user.leagues.all.empty?
+			@user.leagues.all.each {|item| puts "#{item.name}"}
 		else
 			puts "there are no saved leagues"
 		end
@@ -73,21 +72,19 @@ EOS
 		if input == "v"
 			puts "enter name of league you would like to view"
 			input2 = gets.chomp.downcase
-			rules(League.where(user_id: @user_id, name: input2).first)
+			rules(@user.leagues.where(name: input2).first)
 		end
 		delete_league if input == "d"	
-		home_screen(@user_id) if input == "b"	
+		home_screen(@user) if input == "b"	
 		choose_position if input == "c"
 	end
 
 	def delete_league
 		puts "enter name of league to delete"
-			input2 = gets.chomp.downcase
-			leagues = (League.where(user_id: @user_id, name: input2).all)
-		leagues.each do |item|
-			item.destroy
-		end
-		home_screen(@user_id)
+		input2 = gets.chomp.downcase
+		leagues = @user.leagues.where(name: input2).first
+		leagues.destroy
+		home_screen(@user)
 	end
 
 	def rules(league = League.last)
@@ -118,7 +115,7 @@ EOS
 		if input == "y"
 			rule_change(new_league)
 		else
-			home_screen(@user_id)
+			home_screen(@user)
 		end
 	end
 
@@ -199,7 +196,7 @@ EOS
 		puts "[b]ack to edit, [h]ome screen"
 		input = gets.chomp.downcase
 		rule_change(league) if input == "b"
-		home_screen(@user_id) if input == "h"
+		home_screen(@user) if input == "h"
 	end
 
 end

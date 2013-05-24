@@ -23,7 +23,7 @@ module Login
 		puts "please enter password"
 		password = STDIN.noecho(&:gets)
 		if authentication(user_name, password.chomp)
-			home_screen(User.where(user_id: user_name).first.user_id)
+			home_screen(User.where(user_id: user_name).first)
 		else
 			puts "User name and/or password is incorrect"
 			puts "[r]etry, [c]reate account"
@@ -69,7 +69,7 @@ module Login
 			sleep (3)
 			create_account
 		else
-			home_screen(User.where(user_id: user_name).first.user_id)
+			home_screen(User.where(user_id: user_name).first)
 		end
 	end
 
