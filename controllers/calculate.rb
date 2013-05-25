@@ -3,7 +3,7 @@ module Calculate
 	def choose_position
 		unless @user.leagues.all.empty?
 			puts CLEAR
-			puts "Please enter the position of the player"
+			puts "Please enter the abbreviated position of the player"
 			@position = gets.chomp.downcase
 			get_list(@position)
 		else

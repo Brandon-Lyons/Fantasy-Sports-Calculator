@@ -27,6 +27,7 @@ EOS
 		puts CLEAR
 		puts title
 		puts "Hello #{@user.user_id}!"
+		puts "You have #{league_count}"
 		puts "Please select an option"
 		puts "Create new league ---> [n]"
 		puts "View leagues---------> [v]"
@@ -60,12 +61,22 @@ EOS
 		end
 	end
 
+	def league_count
+		num_leagues = @user.leagues.all.size
+		if num_leagues == 0 || num_leagues >= 2
+			return "#{num_leagues} leagues"
+		else
+			return "#{num_leagues} league"
+		end
+	end
+
 	def view_leagues
 		puts CLEAR
 		unless @user.leagues.all.empty?
 			@user.leagues.all.each {|item| puts "#{item.name}"}
 		else
 			puts "there are no saved leagues"
+			no_leagues_navbar
 		end
 		puts "[c]alculate score, [v]iew league rules, [d]elete league, [b]ack to home"
 		input = gets.chomp.downcase
@@ -197,6 +208,14 @@ EOS
 		input = gets.chomp.downcase
 		rule_change(league) if input == "b"
 		home_screen(@user) if input == "h"
+	end
+
+	def no_leagues_navbar
+		puts "[b]ack to home, [c]reate new league, E[x]it"
+		input = gets.chomp.downcase
+		home_screen(@user) if input == "b"
+		create_league if input == "c"
+		puts `clear` if input == "x"
 	end
 
 end
