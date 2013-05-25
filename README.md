@@ -16,15 +16,15 @@ For instructions on installing Ruby [click here](http://www.ruby-lang.org/en/dow
 For instructions on installing Python [click here](http://wiki.python.org/moin/BeginnersGuide/Download).<br />
 Once you install Ruby and Python you will need to install the bundler gem.
 
->gem install bundler
+`gem install bundler`
 
 Then navigate to the Fantasy Calculator directory and run bundler to install all necessary gems.
 
->bundle
+`bundle`
 
 To start the application 
 
->ruby fantasycalculator.rb
+`ruby fantasycalculator.rb`
 
 then follow the on-screen promts and enjoy!
 
