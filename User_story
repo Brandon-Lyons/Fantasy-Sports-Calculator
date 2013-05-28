@@ -1,0 +1,25 @@
+#User Story
+
+As a Fantasy football player.<br />
+I would like to know the score a player recieved in all of my leagues.<br />
+<ul>
+<li>user can enter the scoring rules for each of their leagues</li>
+<li>user can enter player by position and name</li>
+<li>score for each league is outputted</li>
+</ul>
+
+---
+
+As as fantasy football player.<br />
+I would like to have my league rules stored for usage later.<br />
+<ul>
+<li>league rules are saved to a database upon creation</li>
+</ul>
+
+---
+
+As a fantasy football player.<br />
+I would like to access my leagues and no others.<br />
+<ul>
+<li>leagues are separated by users</li>
+</ul>
