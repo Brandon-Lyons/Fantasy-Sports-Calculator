@@ -84,7 +84,7 @@ module Login
 
 	def destroy_account(user_name)
 		user = User.where(user_id: user_name).first
-		leagues = League.where(user_id: user_name).all
+		leagues = user.leagues.all
 		user.destroy
 		leagues.each do |item|
 			item.destroy
