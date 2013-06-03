@@ -75,10 +75,10 @@ module Calculate
 		total
 	end
 
-	def calculate_rush_score(hash, league)
-		td = hash["rushing_tds"].to_i
-		yards = hash["rushing_yds"].to_i
-		two_pt = hash["rushing_twoptm"].to_i
+	def calculate_rush_or_rec_score(hash, league, type)
+		td = hash["#{type}_tds"].to_i
+		yards = hash["#{type}_yds"].to_i
+		two_pt = hash["#{type}_twoptm"].to_i
 		td_rule = league.rush_td
 		yard_rule = league.rush_yards
 		two_pt_rule = league.rush_2pt
@@ -89,25 +89,11 @@ module Calculate
 		total
 	end
 
-	def calculate_rec_score(hash, league)
-		td = hash["receiving_tds"].to_i
-		yards = hash["receiving_yds"].to_i
-		two_pt = hash["receiving_twoptm"].to_i
-		td_rule = league.rec_td
-		yard_rule = league.rec_yards
-		two_pt_rule = league.rec_2pt
-		td_score = td * td_rule
-		yards_score = (yards / 10) * yard_rule
-		two_pt_score = two_pt * two_pt_rule
-		total = td_score + yards_score + two_pt_score
-		total
-	end
-
 	def calculate_total_score(hash, leagues)
 		leagues.each do |league|
 	        pass = calculate_pass_score(hash, league)
-	        rush = calculate_rush_score(hash, league)
-	        rec = calculate_rec_score(hash, league)
+	        rush = calculate_rush_or_rec_score(hash, league, "rushing")
+	        rec = calculate_rush_or_rec_score(hash, league, "receiving")
 	        total = pass + rush + rec
 	        puts "#{league.name} total is #{total}"
 	    end
