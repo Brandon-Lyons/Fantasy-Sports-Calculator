@@ -117,8 +117,7 @@ EOS
 		puts "Please enter a category"
 		input = gets.chomp.downcase
 		pass_rules_change(league) if input == "pass"
-		rush_rules_change(league) if input == "rush"
-		rec_rules_change(league) if input == "rec"
+		rush_or_rec_rules_change(league, input) if input == "rush" || input == "rec"
 	end
 
 	def print_rules(league)
@@ -158,7 +157,7 @@ EOS
 		navbar(league)
 	end
 
-	def rush_rules_change(league)
+	def rush_or_rec_rules_change(league, category )
 		puts "Please select rule to change"
 		puts "[1] Touchdown"
 		puts "[2] Yards"
@@ -166,25 +165,12 @@ EOS
 		input = gets.chomp.to_i
 		puts "Please enter new value"
 		value = gets.chomp.to_i
-		league.update_attributes(rush_td: value) if input == 1
-		league.update_attributes(rush_yards: value) if input == 2
-		league.update_attributes(rush_2pt: value) if input == 3
+		league.update_attributes((category + "_td").to_sym => value) if input == 1
+		league.update_attributes((category + "_yards").to_sym => value) if input == 2
+		league.update_attributes((category + "_2pt").to_sym => value) if input == 3
 		navbar(league)
 	end
 
-	def rec_rules_change(league)
-		puts "Please select rule to change"
-		puts "[1] Touchdown"
-		puts "[2] Yards"
-		puts "[3] 2 point conv"
-		input = gets.chomp.to_i
-		puts "Please enter new value"
-		value = gets.chomp.to_i
-		league.update_attributes(rec_td: value) if input == 1
-		league.update_attributes(rec_yards: value) if input == 2
-		league.update_attributes(rec_2pt: value) if input == 3
-		navbar(league)
-	end
 
 	def navbar(league)
 		puts "[b]ack to edit, [h]ome screen"
