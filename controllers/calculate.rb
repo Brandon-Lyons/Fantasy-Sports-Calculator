@@ -29,17 +29,17 @@ module Calculate
 	def list_players
 		puts CLEAR
 		unless @player_list.empty?
-			format_name
+			array = @player_list.shift(25)
+			array.each_with_index {|item, i| puts "#{i + 1}. #{item}"}
+			puts "Enter the name of the player or [>] to see next 25 players"
+			name = gets.titleize.chomp
+			format_name(name)
 		else
 			get_list(@position)
 		end
 	end
 
-	def format_name
-		array = @player_list.shift(25)
-		array.each_with_index {|item, i| puts "#{i + 1}. #{item}"}
-		puts "Enter the name of the player or [>] to see next 25 players"
-		name = gets.titleize.chomp
+	def format_name(name)
 		list_players if name == ">"
 		puts "What year?"
 		year = gets.chomp.to_i
