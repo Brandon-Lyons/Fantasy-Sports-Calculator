@@ -80,9 +80,7 @@ EOS
 		end
 		puts "[c]alculate score, [v]iew league rules, [d]elete league, [b]ack to home"
 		input = gets.chomp.downcase
-		if input == "v"
-			select_league
-		end
+		select_league if input == "v"
 		delete_league if input == "d"	
 		home_screen(@user) if input == "b"	
 		choose_position if input == "c"
