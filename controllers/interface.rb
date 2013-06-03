@@ -81,13 +81,17 @@ EOS
 		puts "[c]alculate score, [v]iew league rules, [d]elete league, [b]ack to home"
 		input = gets.chomp.downcase
 		if input == "v"
-			puts "enter name of league you would like to view"
-			input2 = gets.chomp.downcase
-			rules(@user.leagues.where(name: input2).first)
+			select_league
 		end
 		delete_league if input == "d"	
 		home_screen(@user) if input == "b"	
 		choose_position if input == "c"
+	end
+
+	def select_league
+		puts "enter name of league you would like to view"
+		input = gets.chomp.downcase
+		rules(@user.leagues.where(name: input).first)
 	end
 
 	def delete_league
@@ -154,7 +158,7 @@ EOS
 		league.update_attributes(pass_yards: value) if input == 2
 		league.update_attributes(int: value) if input == 3
 		league.update_attributes(pass_2pt: value) if input == 4
-		navbar(league)
+		rules_navbar(league)
 	end
 
 	def rush_or_rec_rules_change(league, category )
@@ -168,11 +172,11 @@ EOS
 		league.update_attributes((category + "_td").to_sym => value) if input == 1
 		league.update_attributes((category + "_yards").to_sym => value) if input == 2
 		league.update_attributes((category + "_2pt").to_sym => value) if input == 3
-		navbar(league)
+		rules_navbar(league)
 	end
 
 
-	def navbar(league)
+	def rules_navbar(league)
 		puts "[b]ack to edit, [h]ome screen"
 		input = gets.chomp.downcase
 		rule_change(league) if input == "b"
