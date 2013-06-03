@@ -100,31 +100,12 @@ EOS
 
 	def rules(league = League.last)
 		puts CLEAR
-		new_league = league
-		rules =<<EOS
-#{new_league.name.upcase}
-Pass
-Touchdown....................#{new_league.pass_td}
-Every 25 Yards...............#{new_league.pass_yards}
-Interception................#{new_league.int}
-2 point conv pass............#{new_league.pass_2pt}
-
-Rush
-Touchdown....................#{new_league.rush_td}
-Every 10 Yards...............#{new_league.rush_yards}
-2 point conv rush............#{new_league.rush_2pt}
-
-Receiving
-Touchdown....................#{new_league.rec_td}
-Every 10 Yards...............#{new_league.rec_yards}
-2 point conv rec.............#{new_league.rec_2pt}
-EOS
-		puts rules
+		print_rules(league)
 		puts "Would you like to change the scoring rules? [y/n]"
 		input = gets.chomp.downcase
 
 		if input == "y"
-			rule_change(new_league)
+			rule_change(league)
 		else
 			home_screen(@user)
 		end
@@ -132,31 +113,33 @@ EOS
 
 	def rule_change(league)
 		puts CLEAR
-		new_league = league
-		rules =<<EOS
-#{new_league.name.upcase}
-Pass
-Touchdown....................#{new_league.pass_td}
-Every 25 Yards...............#{new_league.pass_yards}
-Interception................#{new_league.int}
-2 point conv pass............#{new_league.pass_2pt}
-
-Rush
-Touchdown.....................#{new_league.rush_td}
-Every 10 Yards................#{new_league.rush_yards}
-2 point conv rush.............#{new_league.rush_2pt}
-
-Rec
-Touchdown.....................#{new_league.rec_td}
-Every 10 Yards................#{new_league.rec_yards}
-2 point conv rec..............#{new_league.rec_2pt}
-EOS
-		puts rules
+		print_rules(league)
 		puts "Please enter a category"
 		input = gets.chomp.downcase
-		pass_rules_change(new_league) if input == "pass"
-		rush_rules_change(new_league) if input == "rush"
-		rec_rules_change(new_league) if input == "rec"
+		pass_rules_change(league) if input == "pass"
+		rush_rules_change(league) if input == "rush"
+		rec_rules_change(league) if input == "rec"
+	end
+
+	def print_rules(league)
+		puts <<-EOS
+#{league.name.upcase}
+Pass
+Touchdown....................#{league.pass_td}
+Every 25 Yards...............#{league.pass_yards}
+Interception................#{league.int}
+2 point conv pass............#{league.pass_2pt}
+
+Rush
+Touchdown.....................#{league.rush_td}
+Every 10 Yards................#{league.rush_yards}
+2 point conv rush.............#{league.rush_2pt}
+
+Rec
+Touchdown.....................#{league.rec_td}
+Every 10 Yards................#{league.rec_yards}
+2 point conv rec..............#{league.rec_2pt}
+EOS
 	end
 
 	def pass_rules_change(league)
