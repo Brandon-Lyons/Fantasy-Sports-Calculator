@@ -40,24 +40,28 @@ module Login
 	def delete_account
 		users = User.all
 		unless users.empty?
-			users.each_with_index {|item, i| puts "#{i + 1}. #{item.user_id}"}
-			puts "Select account to delete by number"
-			input = gets.chomp.to_i
-			puts "Enter account password to confirm deletion"
-			puts "WARNING this will delete all leagues associated with this account"
-			password = STDIN.noecho(&:gets).chomp
-			if authentication(users[input - 1].user_id, password)
-				destroy_account(users[input - 1].user_id)
-			else
-				puts "password doesn't match"
-				sleep(3)
-				intro
-			end
+			confirm_deletion
 		else
 			puts "There are no accounts"
 			puts "[C]reate account, E[x]it"
 			input = gets.chomp.downcase
 			create_account if input == "c"
+		end
+	end
+
+	def confirm_deletion
+		users.each_with_index {|item, i| puts "#{i + 1}. #{item.user_id}"}
+		puts "Select account to delete by number"
+		input = gets.chomp.to_i
+		puts "Enter account password to confirm deletion"
+		puts "WARNING this will delete all leagues associated with this account"
+		password = STDIN.noecho(&:gets).chomp
+		if authentication(users[input - 1].user_id, password)
+			destroy_account(users[input - 1].user_id)
+		else
+			puts "password doesn't match"
+			sleep(3)
+			intro
 		end
 	end
 
