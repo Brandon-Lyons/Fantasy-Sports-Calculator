@@ -25,12 +25,16 @@ module Login
 		if authentication(user_name, password.chomp)
 			home_screen(User.where(user_id: user_name).first)
 		else
-			puts "User name and/or password is incorrect"
-			puts "[r]etry, [c]reate account"
-			input = gets.chomp.downcase
-			login if input == "r"
-			create_account if input == "c"
+			incorrect_login
 		end	
+	end
+
+	def incorrect_login
+		puts "User name and/or password is incorrect"
+		puts "[r]etry, [c]reate account"
+		input = gets.chomp.downcase
+		login if input == "r"
+		create_account if input == "c"
 	end
 
 	def delete_account
