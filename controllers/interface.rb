@@ -34,16 +34,10 @@ EOS
 		puts "Calculate score -----> [c]"
 		puts "Exit-----------------> [x]"
 		input = gets.chomp.downcase
-
-		if input == "n"
-			create_league
-		elsif input == "v"
-			view_leagues
-		elsif input == "c"
-			choose_position
-		else
-			puts `clear`		
-		end
+		create_league if input == "n"
+		view_leagues if input == "v"
+		choose_position if input == "c"
+		puts `clear` if input == "x"
 	end
 
 	def create_league
