@@ -27,7 +27,6 @@ EOS
 		puts CLEAR
 		puts title
 		puts "Hello #{@user.user_id}!"
-		puts "You have #{league_count}"
 		puts "Please select an option"
 		puts "Create new league ---> [n]"
 		puts "View leagues---------> [v]"
@@ -52,15 +51,6 @@ EOS
 			puts "There is already a league by that name"
 			sleep (3)
 			create_league
-		end
-	end
-
-	def league_count
-		num_leagues = @user.leagues.all.size
-		if num_leagues == 0 || num_leagues >= 2
-			return "#{num_leagues} leagues"
-		else
-			return "#{num_leagues} league"
 		end
 	end
 
